@@ -1,0 +1,61 @@
+version: '3'
+services:
+  go:
+    build: 
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    container_name: go
+    tty: true
+    links:
+      - db
+      - redis
+    volumes:
+      - .:/go/idolverse
+    networks:
+      - idolverse_net
+    ports:
+      - 9090:9090
+    env_file:
+      - ./docker/go/go.env
+  redis:
+    image: redis:6
+    command: bash -c '/usr/local/bin/redis-server /usr/local/etc/redis/redis.conf'
+    container_name: redis
+    networks:
+      - idolverse_net
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/redis:/usr/local/etc/redis
+  db:
+    container_name: db
+    image: postgres:14
+    restart: always
+    env_file:
+      - ./docker/db/db.env
+    volumes:
+      - ./docker/db/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./docker/db/data:/var/lib/postgresql/data
+    networks:
+      - idolverse_net
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: pgsql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: idolverse
+    restart: always
+    links:
+      - db
+    networks:
+      - idolverse_net
+    ports:
+      - 8080:8080
+networks:
+  idolverse_net:
+    driver: bridge
+    ipam:
+      driver: default
