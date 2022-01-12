@@ -1,16 +1,21 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
+	"os"
 )
 
 func main() {
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World")
+		data, err := os.ReadFile("./blockchain_log.txt")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprintf(w, "This is the current blockchain in the PoK network:\n\n\n")
+		fmt.Fprintf(w, (string(data)))
 	})
 
 	http.HandleFunc("/greet/", func(w http.ResponseWriter, r *http.Request) {
@@ -18,30 +23,29 @@ func main() {
 		fmt.Fprintf(w, "Hello %s\n", name)
 	})
 
+	http.HandleFunc("/chain/", handleUploading)
+
 	http.ListenAndServe(":9090", nil)
 }
 
-func ReceiveFile(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(32 << 20) // limit your max input length!
-	var buf bytes.Buffer
-	// in your case file would be fileupload
-	file, header, err := r.FormFile("file")
+func handleUploading(w http.ResponseWriter, r *http.Request) {
+	// ParseMultipartForm parses a request body as multipart/form-data
+	r.ParseMultipartForm(32 << 20)
+
+	file, _, err := r.FormFile("file") // Retrieve the file from form data
+
 	if err != nil {
-		panic(err)
+		return
 	}
-	defer file.Close()
-	name := strings.Split(header.Filename, ".")
-	fmt.Printf("File name %s\n", name[0])
-	// Copy the file data to my buffer
-	io.Copy(&buf, file)
-	// do something with the contents...
-	// I normally have a struct defined and unmarshal into a struct, but this will
-	// work as an example
-	contents := buf.String()
-	fmt.Println(contents)
-	// I reset the buffer in case I want to use it again
-	// reduces memory allocations in more intense projects
-	buf.Reset()
-	// do something else
-	// etc write header
+	defer file.Close() // Close the file when we finish
+
+	// This is path which we want to store the file
+	f, err := os.OpenFile("./blockchain.txt", os.O_RDWR|os.O_CREATE, 0777)
+
+	if err != nil {
+		return
+	}
+
+	// Copy the file to the destination path
+	io.Copy(f, file)
 }

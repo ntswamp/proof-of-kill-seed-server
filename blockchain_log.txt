@@ -1,0 +1,32 @@
+=================================================================================================
+	Block Hash          0556e8fa63498f6552b06d6feade13ad374c3863c448f91750e11b54f1e541b7
+	        ----------------------------transaction data-----------------------------
+			transaction id:  11b4cd86ee421692a27066fa8444bae5a619e66487ffb848844acf28ed412ceb
+			sender agent  :  Node5, Paladin
+			tx_input      :
+					tx id    :  11b4cd86ee421692a27066fa8444bae5a619e66487ffb848844acf28ed412ceb
+					index    :  0
+					signature:  ab37645d669d42489a51d2f13b46757f8c562eb2f8194cd11b75fb13d5b65a97
+					pubkey   :  d41a99ce61ffdb45aea7b485f1cd60c48a249c7a
+					address  :  1Pu6YnhaWAvHQifh5ocgXLzeUpotJxRf9d
+			tx_output     :
+					value    : 30
+					pubkey	 : d41a99ce61ffdb45aea7b485f1cd60c48a249c7a
+					address  : 1EVrFBakJnhaWAvHQNhCJKLzensYqtJxR5
+			tx_input      :
+					tx id    :  11b4cd86ee421692a27066fa8444bae5a619e66487ffb848844acf28ed412ceb
+					index    :  0
+					signature:  ab37645d669d42489a51d2f13b46757f8c562eb2f8194cd11b75fb13d5b65a97
+					pubkey   :  d41a99ce61ffdb45aea7b485f1cd60c48a249c7a
+					address  :  1Pu6YnhaWAvHQifh5ocgXLzeUpotJxRf9d
+			tx_output     :
+					value    : 20
+					pubkey	 : d41a99ce61ffdb45aea7b485f1cd60c48a249c7a
+					address  : 1KNgFa165mjG2dZLcZ2ifhKtaZLu3SR5iF
+		--------------------------------------------------------------------------
+	Time Stamp	    2021-11-23 04:34:56 PM
+	Height              6
+	Kill                1024
+	Previous Hash       9b74e35c0d57a8c25fc04e56b5284bb01161e44f53ba80fe9fbbe6fc3eb3eacd
+	Agent               Node6, Mage
+=================================================================================================
